@@ -13,7 +13,7 @@ and Ruby 1.9 with its "gem" package manager.
 
     $ sudo apt-get install ruby1.9 gem1.9
     $ sudo cpan Device::MiniLED
-    $ gem install --user-install ./vendor/muni-0.0.6.gem
+    $ sudo gem install muni
 
 To execute the program at startup:
     $ sudo cp contrib/munisign /etc/init.d
