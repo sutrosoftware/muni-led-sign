@@ -91,7 +91,7 @@ def update_sign(font, allstops)
   texts_for_sign = []
   arrival_times.each do |route, predictions|
     # Show first two predictions
-    prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p| muni_time(p.time)}.join(' & ')
+    prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p| muni_time(p.time - options[:interval])}.join(' & ')
     unless NOP.eql? prediction_text
       # Fixup route name.
       route = fixup_route_name(route, predictions[0])
