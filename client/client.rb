@@ -112,6 +112,7 @@ def update_sign(font, allstops, interval)
   LED_Sign.pic(text_for_sign)
 #  puts text_for_sign
 #  $stdout.flush
+#  $stderr.flush
 end
 
 allstops = []
