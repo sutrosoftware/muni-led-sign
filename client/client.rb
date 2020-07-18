@@ -106,7 +106,7 @@ def update_sign(font, allstops, offset)
     # Empty predictions array: this may be just nighttime.
     text_for_sign = font.render_multiline(["No routes", "until next morning."], 8, :ignore_shift_h => true, :distance => 0, :fixed_width => LED_Sign::SCREEN_WIDTH).zero_one
   end
-  LED_Sign.pic("0\n")
+  LED_Sign.clear
   LED_Sign.pic(text_for_sign)
 #  puts text_for_sign
 #  $stdout.flush
