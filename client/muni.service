@@ -1,0 +1,12 @@
+[Unit]
+Description=Muni
+After=network.target muni-prep.service
+
+[Service]
+ExecStart=/bin/bash -c './client.rb -c stops.txt -b blank.txt &'
+WorkingDirectory=/home/pi/muni-led-sign/client
+Type=forking
+User=pi
+
+[Install]
+WantedBy=multi-user.target

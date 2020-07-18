@@ -1,0 +1,12 @@
+[Unit]
+Description=Muni Prep
+After=local-fs.target
+
+[Service]
+ExecStart=/bin/bash -c './clear.pl'
+WorkingDirectory=/home/pi/muni-led-sign/client
+Type=forking
+User=pi
+
+[Install]
+WantedBy=multi-user.target
