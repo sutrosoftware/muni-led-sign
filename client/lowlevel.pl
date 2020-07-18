@@ -93,7 +93,8 @@ for my $message_data (@messages) {
 #         speed => 3
 # );
 $sign->send(
-    device => "/dev/ttyUSB0"
+    device => "/dev/ttyUSB0",
+    packetdelay => 0.5
 #    packetdelay => 0.5
     #    device      => "/dev/ttyUSB0",
     #    baudrate    => "9600",
