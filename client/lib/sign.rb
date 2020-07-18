@@ -4,7 +4,6 @@ require_relative 'enhanced_open3'
 
 class LED_Sign
   SCRIPT = File.join(File.dirname(__FILE__), '..', '..', 'client', 'lowlevel.pl')
-  CLEARSCRIPT = File.join(File.dirname(__FILE__), '..', '..', 'client', 'clear.pl')
   def self.text(data)
     draw = ['/usr/bin/perl', SCRIPT, '--type=text']
     print = proc {|line| $stderr.puts line}
@@ -15,11 +14,6 @@ class LED_Sign
     draw = ['/usr/bin/perl', SCRIPT, '--type=pic']
     print = proc {|line| $stderr.puts line}
     EnhancedOpen3.open3_input_linewise(data, print, print, *draw)
-  end
-
-  def self.clear
-    cmd = ['/usr/bin/perl', CLEARSCRIPT]
-    EnhancedOpen3.popen3(*cmd)
   end
   
   # Sign dimensions (to aid in text formatting).
@@ -44,7 +38,7 @@ def darken_if_necessary(options)
   dark_file = options[:blankfile]
   if dark_file && File.exists?(dark_file)
     # We can't "turn off" the sign, but we can send it an empty picture.
-    LED_Sign.clear
+    LED_Sign.pic("0\n")
     return true
   end
   false
