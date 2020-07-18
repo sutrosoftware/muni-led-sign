@@ -7,17 +7,17 @@ require_relative 'lib'
 font = muni_sign_font(File.join(File.dirname(__FILE__), 'font'))
 
 options = {
-    :interval => 30
+    :interval => 30,
+    :offset => 60
 }
 
 op = OptionParser.new do |opts|
   opts.banner = "Usage: client.rb"
-  # Required
   opts.on('-r', '--route ROUTE', "Route name or number")
   opts.on('-d', '--direction DIR', ["outbound", "inbound"], "Route direction - inbound or outbound")
   opts.on('-s', '--stop STOP', "Stop name or ID to watch")
-  # Optional
   opts.on('-i', '--interval SECONDS', Integer, "Sign updates per second (default 30)")
+  opts.on('-o', '--offset SECONDS', Integer, "Decrease prediction times by this many seconds (default 60)")
   opts.on('-b', '--blankfile FILE', "Turn off the sign instead of updating, if FILE exists")
   opts.on('-c', '--configfile FILE', "Config file for multiple stops (format: route|dir|stop)")
 #  puts opts
@@ -78,7 +78,7 @@ def muni_time(time)
   end
 end
 
-def update_sign(font, allstops, interval)
+def update_sign(font, allstops, offset)
   arrival_times = Hash.new
   allstops.each do |options|
     arrival_times.merge!(get_stop_arrivals(options[:route], options[:direction], options[:stop]))
@@ -89,7 +89,7 @@ def update_sign(font, allstops, interval)
   arrival_times.each do |route, predictions|
     # Show first two predictions
     prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p|
-      muni_time(p.time - interval)
+      muni_time(p.time - offset)
     }.join(' & ')
     unless NOP.eql? prediction_text
       # Fixup route name.
@@ -128,7 +128,7 @@ end
 
 while true
   begin
-    darken_if_necessary(options) or update_sign(font, allstops, options[:interval])
+    darken_if_necessary(options) or update_sign(font, allstops, options[:offset])
   rescue => e
     $stderr.puts "Well, we continue despite this error: #{e}\n#{e.backtrace.join("\n")}"
   end
