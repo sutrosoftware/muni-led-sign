@@ -81,7 +81,7 @@ def muni_time(time)
   end
 end
 
-def update_sign(font, allstops)
+def update_sign(font, allstops, interval)
   arrival_times = Hash.new
   allstops.each do |options|
     arrival_times.merge!(get_stop_arrivals(options[:route], options[:direction], options[:stop]))
@@ -91,7 +91,9 @@ def update_sign(font, allstops)
   texts_for_sign = []
   arrival_times.each do |route, predictions|
     # Show first two predictions
-    prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p| muni_time(p.time - options[:interval])}.join(' & ')
+    prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p|
+      muni_time(p.time - interval)
+    }.join(' & ')
     unless NOP.eql? prediction_text
       # Fixup route name.
       route = fixup_route_name(route, predictions[0])
@@ -128,7 +130,7 @@ end
 
 while true
   begin
-    darken_if_necessary(options) or update_sign(font, allstops)
+    darken_if_necessary(options) or update_sign(font, allstops, options[:interval])
   rescue => e
     $stderr.puts "Well, we continue despite this error: #{e}\n#{e.backtrace.join("\n")}"
   end
