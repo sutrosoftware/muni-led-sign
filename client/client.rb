@@ -73,7 +73,7 @@ def muni_time(time, offset)
   if distance > 60
     "#{(distance / 60).to_i} min"
   elsif distance < 0
-    "Arrived"
+    "Departed"
   else
     "Arriving"
   end
