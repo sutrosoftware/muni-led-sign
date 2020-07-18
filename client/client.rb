@@ -68,12 +68,13 @@ def fixup_route_name(route_name, prediction)
   unstripped_result.slice(0, 18)
 end
 
-def muni_time(time)
-  distance = time - Time.now
+def muni_time(time, offset)
+  distance = time - offset - Time.now
   if distance > 60
     "#{(distance / 60).to_i} min"
+  elsif distance < -offset
+    "Arrived"
   else
-    # Finally!  It took that damn train like forever!
     "Arriving"
   end
 end
@@ -89,7 +90,7 @@ def update_sign(font, allstops, offset)
   arrival_times.each do |route, predictions|
     # Show first two predictions
     prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p|
-      muni_time(p.time - offset)
+      muni_time(p.time, offset)
     }.join(' & ')
     unless NOP.eql? prediction_text
       # Fixup route name.
