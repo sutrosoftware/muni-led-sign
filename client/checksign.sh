@@ -7,7 +7,7 @@ fi
 
 if [ -f /home/pi/reset.lock ]; then
 	echo "found lock file" >> /home/pi/reset.log
-elif ping -q -c 1 $1 &> /dev/null; then
+elif ping -q -c 1 -w 2 $1 &> /dev/null; then
 	touch /home/pi/reset.lock
 	echo `date` " - starting reset" >> /home/pi/reset.log
    sudo systemctl stop muni
