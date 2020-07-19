@@ -20,11 +20,11 @@ ERRORCODE=$?
 if [ "$ERRORCODE" -ne 0 ]; then
 	touch $LOCK
 	echo `date` " - starting reset" >> $LOG
-#	sudo systemctl stop muni
-#	sudo ifconfig wlan0 down
+	sudo systemctl stop muni
+	sudo ifconfig wlan0 down
 	/home/pi/muni-led-sign/client/clear.pl
-#	sudo ifconfig wlan0 up
-#	sudo systemctl start muni
+	sudo ifconfig wlan0 up
+	sudo systemctl start muni
 	echo `date` " - finished reset" >> $LOG
 	rm $LOCK
 fi
