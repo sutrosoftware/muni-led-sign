@@ -92,6 +92,9 @@ def update_sign(font, allstops, offset)
     prediction_text = predictions.empty? ? NOP : predictions.slice(0, 2).map{|p|
       muni_time(p.time, offset)
     }.join(' & ')
+    if route =~ /^.BUS*/
+      route = route[5..-1]
+    end
     unless NOP.eql? prediction_text
       # Fixup route name.
       route = fixup_route_name(route, predictions[0])
