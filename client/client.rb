@@ -8,7 +8,7 @@ font = muni_sign_font(File.join(File.dirname(__FILE__), 'font'))
 
 options = {
     :interval => 30,
-    :offset => 60
+    :offset => 45
 }
 
 op = OptionParser.new do |opts|
